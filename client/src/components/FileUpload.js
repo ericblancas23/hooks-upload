@@ -13,7 +13,7 @@ const FileUpload = () => {
 
     const onSubmit = async e => {
         e.preventDefault();
-        const formData = new FormData;
+        const formData = new FormData();
         formData.append('file', file);
 
         try {
@@ -43,6 +43,12 @@ const FileUpload = () => {
             </div>
             <input type="submit" value="upload" className="btn btn-primary btn-block mt-4"></input>
             </form>
+            {uploadedFile ? <div className="row mt-5">
+                <div className="col-md-6 m-auto">
+                    <h3 className="text-center">{uploadedFile.fieldName}</h3>
+                    <img style={{ width: '100%'}} src={uploadedFile.filePath} alt="uploaded file"></img>
+                </div>
+            </div> : null}
         </Fragment>
     )
 }
