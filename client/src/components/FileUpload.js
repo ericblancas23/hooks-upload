@@ -5,6 +5,7 @@ const FileUpload = () => {
     const [file, setFile] = useState('');
     const [filename, setFilename] = useState('Choose File');
     const [uploadedFile, setUploadedFile] = useState({});
+    const [message, setMessage] = useState('');
 
     const onChange = (e) => {
         setFile(e.target.files[0]);
@@ -22,17 +23,18 @@ const FileUpload = () => {
                     'Content-Type':'multipart/form-data'
                 }
             });
+
             const { fileName, filePath } = res.data;
             setUploadedFile({ fileName, filePath });
-
+            setMessage('file uploaded');
         } catch(err) {
             if(err.response.status === 500) {
-                console.log('There was an error with the server')
+                setMessage('There was an error with the server');
             } else {
-                console.log(err.response.data.msg);
+                setMessage(err.response.data.msg);
             }
         }
-    }
+    };
 
     return (
         <Fragment>
@@ -43,6 +45,7 @@ const FileUpload = () => {
             </div>
             <input type="submit" value="upload" className="btn btn-primary btn-block mt-4"></input>
             </form>
+
             {uploadedFile ? <div className="row mt-5">
                 <div className="col-md-6 m-auto">
                     <h3 className="text-center">{uploadedFile.fieldName}</h3>
